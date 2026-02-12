@@ -3,7 +3,7 @@ project_name: cnpg
 
 release:
   github:
-    owner: cloudnative-pg
+    owner: "{{ .Env.REPO_OWNER }}"
     name: cloudnative-pg
 
 env:
