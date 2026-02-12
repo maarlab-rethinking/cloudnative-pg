@@ -23,8 +23,10 @@ jobs:
         name: Get tag
         run: |
           TAG=${GITHUB_REF##*/v}
-          if [[ "${TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            DEST=$(echo ${TAG} | awk -F '[.]' '{print "release-"$1"."$2}')
+          # Fork-specific: derive release branch from X.Y, supporting
+          # both X.Y.Z and X.Y.Z-suffix versions (e.g. 1.28.1-fork1)
+          if [[ "${TAG}" =~ ^([0-9]+\.[0-9]+)\.[0-9]+ ]]; then
+            DEST="release-${BASH_REMATCH[1]}"
           else
             DEST="main"
           fi
